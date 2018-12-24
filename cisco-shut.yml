@@ -1,0 +1,30 @@
+---
+- name: shutdown all unused interfaces in CISCO switches
+  hosts: cisco-test
+  connection: local
+  gather_facts: no
+
+  vars:
+    provider:
+      host: "{{ inventory_hostname }}"
+      password: "{{ password }}"
+      username: "{{ username }}"
+
+  tasks:
+    - name: make interface down
+      ios_interface:
+        name: "{{ item }}"
+        enabled: False
+        provider: "{{ provider }}"
+      with_items: "{{ interfaces | default([]) }}"
+      when: 
+        - item is defined
+        - item != ""
+      register: task_1
+
+    - name: save running to startup when modified
+      ios_config:
+        save_when: modified
+        provider: "{{ provider }}"
+      when: task_1.changed
+

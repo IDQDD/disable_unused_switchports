@@ -1,0 +1,10 @@
+---
+# glue all playbooks together
+
+# 1. finds unused ports
+- import_playbook: inventory.yml
+# 2. shuts down unused ports in CICSO gears
+- import_playbook: cisco-shut.yml
+# 3. shuts down unused ports in HUAWEI gears
+- import_playbook: hw-shut.yml
+

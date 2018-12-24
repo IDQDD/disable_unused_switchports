@@ -1,0 +1,21 @@
+#global vars
+[all:vars]
+days=30  #days to be passed to consider switch port be unused
+
+[cisco]
+catalyst19
+catalyst20
+catalyst22
+catalyst23
+
+[huawei]
+shab-3a
+shab-3b
+shab-4a
+shab-4b
+
+[cisco-test]
+catalyst100
+
+[huawei-test]
+OOB_Switch1

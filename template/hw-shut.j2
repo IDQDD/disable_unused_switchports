@@ -1,0 +1,6 @@
+{% if interfaces is defined and interfaces is not none %}
+{% for interface in interfaces %}
+interface {{ interface }}
+  shutdown
+{% endfor %} 
+{% endif %}

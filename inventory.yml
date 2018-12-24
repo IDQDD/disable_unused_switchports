@@ -1,0 +1,10 @@
+---
+- name: find out switch ports that are not being used for XX days
+  hosts: cisco-test,huawei-test
+  connection: local
+  gather_facts: no
+
+  tasks:
+   - name: run inventory.py script for every switch locally
+     shell: /usr/bin/python ./script/inventory.py -H "{{ inventory_hostname }}" -D "{{ days }}" -A
+

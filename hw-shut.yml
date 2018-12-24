@@ -1,0 +1,31 @@
+---
+# this playbook shuts down all the Ethernet interfaces enumerated in the host_vars/hostname file
+- name: shutdown unused ports on group of huawei switches
+  hosts: huawei-test
+  connection: local
+  gather_facts: no
+
+  vars:
+    hwpv:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      dev_os: "ce"
+
+  tasks:
+    - name: generate new configuruation
+      template:
+        src: ./template/hw-shut.j2
+        dest: ./tmp/hw-shut.cfg
+      when: 
+        - interfaces is defined 
+        - interfaces is not none
+      register: task_1
+
+    - name: merge the new configuration with existing one and save it
+      napalm_install_config:
+        provider: "{{ hwpv }}"
+        config_file: ./tmp/hw-shut.cfg
+        commit_changes: True
+      when: task_1.changed
+
