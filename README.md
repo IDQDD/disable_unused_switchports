@@ -19,7 +19,7 @@ SELECT port_label,ifLastChange FROM ports WHERE device_id={ID}
   * *inventory.yml* - ansible playbook выполняет скрипт для множества коммутаторов  
   * *cisco-shut.yml* - ansible playbook выключает неиспользуемые порты на коммутаторах **cisco**  
   * *hw-shut.yml* - ansible playbook выключает неиспользуемые порты на коммутаторах **huawei**  
-  * *shut-down-unused-ports.yml* - shut-down-unused-ports.yml обертка - запускает последовательно *cisco-shut.yml* и *hw-shut.yml* 
+  * *shut-down-unused-ports.yml* - ansible сценарий-обертка: запускает последовательно *cisco-shut.yml* и *hw-shut.yml* 
 
 Сценарий *hw-shut.yml* использует кастомные модули *napalm-ansible*, которые необходимо предварительно установить командой 
 > pip install napalm-ansible
