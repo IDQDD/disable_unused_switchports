@@ -1,6 +1,6 @@
 ---
 - name: find out switch ports that are not being used for XX days
-  hosts: cisco-test,huawei-test
+  hosts: cisco,huawei
   connection: local
   gather_facts: no
 

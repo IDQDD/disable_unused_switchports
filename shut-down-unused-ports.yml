@@ -2,7 +2,10 @@
 # glue all playbooks together
 
 # 1. finds unused ports
-- import_playbook: inventory.yml
+#- import_playbook: inventory.yml
+# first playbook creates VARs for other playbooks but ansible doesn't hand them over
+# so the inventory playbook can't be combined with others and should be running separately
+
 # 2. shuts down unused ports in CICSO gears
 - import_playbook: cisco-shut.yml
 # 3. shuts down unused ports in HUAWEI gears

@@ -1,6 +1,6 @@
 ---
 - name: shutdown all unused interfaces in CISCO switches
-  hosts: cisco-test
+  hosts: cisco
   connection: local
   gather_facts: no
 

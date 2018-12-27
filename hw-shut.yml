@@ -1,7 +1,7 @@
 ---
 # this playbook shuts down all the Ethernet interfaces enumerated in the host_vars/hostname file
 - name: shutdown unused ports on group of huawei switches
-  hosts: huawei-test
+  hosts: huawei
   connection: local
   gather_facts: no
 
