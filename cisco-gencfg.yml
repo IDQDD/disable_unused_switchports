@@ -1,0 +1,24 @@
+---
+- name: generate the shutdown all unused interfaces configs for the CISCO switches
+  hosts: cisco
+  connection: local
+  gather_facts: no
+
+  vars:
+    provider:
+      host: "{{ inventory_hostname }}"
+      password: "{{ password }}"
+      username: "{{ username }}"
+
+  tasks:
+   - name: cleanup old configurations
+     local_action: file path="./tmp/{{ inventory_hostname }}.cfg" state=absent
+     delegate_to: localhost
+
+   - name: generate new configuruations
+     template:
+       src: ./template/hw-shut.j2
+       dest: "./tmp/{{ inventory_hostname }}.cfg"
+     when: 
+       - interfaces is defined 
+       - interfaces is not none
