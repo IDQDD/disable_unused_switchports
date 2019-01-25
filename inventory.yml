@@ -5,6 +5,16 @@
   gather_facts: no
 
   tasks:
+   - name: cleanup host_vars directory
+     local_action: file path=./host_vars state=absent
+     delegate_to: localhost
+     run_once: true
+
+   - name: create host_vars directory
+     local_action: file path=./host_vars state=directory
+     delegate_to: localhost
+     run_once: true
+
    - name: run inventory.py script for every switch locally
      shell: /usr/bin/python ./script/inventory.py -H "{{ inventory_hostname }}" -D "{{ days }}" -A
 

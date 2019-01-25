@@ -6,4 +6,5 @@
 *.retry
 *.log
 tmp/*
+host_vars/*
 

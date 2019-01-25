@@ -13,10 +13,14 @@
       dev_os: "ce"
 
   tasks:
+    - name: cleanup old configurations
+      local_action: file path="./tmp/{{ inventory_hostname }}.cfg" state=absent
+      delegate_to: localhost
+
     - name: generate new configuruation
       template:
         src: ./template/hw-shut.j2
-        dest: ./tmp/hw-shut.cfg
+        dest: "./tmp/{{ inventory_hostname }}.cfg"
       when: 
         - interfaces is defined 
         - interfaces is not none
@@ -25,7 +29,7 @@
     - name: merge the new configuration with existing one and save it
       napalm_install_config:
         provider: "{{ hwpv }}"
-        config_file: ./tmp/hw-shut.cfg
+        config_file: "./tmp/{{ inventory_hostname }}.cfg"
         commit_changes: True
       when: task_1.changed
 
