@@ -3,8 +3,21 @@
 [._]s[a-w][a-z]
 *.un~
 
+# python
+*.pyc
+__pycache__/
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# local
 *.retry
 *.log
 tmp/*
 host_vars/*
+
 

@@ -1,10 +1,10 @@
-#!/usr/bin/python
-# python script that fetch data from observium db and forms inventory files for the following ansible play
+#!/usr/bin/python3
+# python script that fetch data from observium/LibreNMS DB and forms inventory files for the following ansible play
 
 import argparse
 import mysql.connector
-from mysql.connector import Error
 from prettytable import PrettyTable
+from nmsargs import creds, nms, query_device_tpl, query_unused_ports_tpl
 
 parser = argparse.ArgumentParser(description="finds unused ports on a given switch")
 parser.add_argument('-H','--hostname', help="switch's hostname",required=True)
@@ -16,29 +16,24 @@ hostname = args.hostname
 days = args.days
 ansible = args.ansible
 
-query_device="SELECT device_id FROM devices WHERE hostname='{}'".format(hostname)
-
-query_unused_ports_tpl="""SELECT port_label,ifLastChange FROM ports WHERE device_id={}
- and port_label like '%Ethernet%' and ifAdminStatus='up' and ifOperStatus='down' 
- and ifLastChange<=DATE_SUB(CURDATE(),INTERVAL {} DAY)"""
-
 try:
-    mydb = mysql.connector.connect(host="10.1.2.10", user="zabbix", passwd="nga4Lomo", database="observium")
-    cursor = mydb.cursor()
+    cnx = mysql.connector.connect(**creds)
+    cursor = cnx.cursor()
+    query_device = query_device_tpl.format(hostname)
     cursor.execute(query_device)
     res=cursor.fetchone()
 
     try:
         device_id=int(res[0])
-        print "device_id={}".format(device_id)
+        print("device_id={}".format(device_id))
     except TypeError:
-        print """
+        print ("""
 Error:
 there is no hostname -- {} -- found in Observium's database
-----------------------------------------------------------------""".format(hostname)
+----------------------------------------------------------------""".format(hostname))
         exit(0)
 
-    query_unused_ports = query_unused_ports_tpl.format(device_id, days)
+    query_unused_ports = query_unused_ports_tpl[nms].format(device_id, days)
     cursor.execute(query_unused_ports)
     res=cursor.fetchall()
 
@@ -62,20 +57,20 @@ there is no hostname -- {} -- found in Observium's database
                 l=[ifDesc,LastChange]
                 t.add_row(l)
 
-            print t
+            print(t)
 
         except TypeError:
-            print"""
+            print("""
 Seems like all enabled ports on the switch -- {} -- were being used at least once in last {} days
--------------------------------------------------------------------------------------------------""".format(hostname,days)
+-------------------------------------------------------------------------------------------------""".format(hostname,days))
 
 
-except Error as e :
-    print ("Error while connecting to MySQL", e)
+except mysql.connector.Error as e :
+    print("Error while connecting to MySQL", e)
 
 finally:
-    if(mydb.is_connected()):
-        mydb.close()
+    if(cnx.is_connected()):
+        cnx.close()
         print("connection is closed")
 
 
