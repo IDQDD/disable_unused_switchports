@@ -19,7 +19,9 @@ SELECT port_label,ifLastChange FROM ports WHERE device_id={ID}
 SELECT ifDescr, DATE_SUB(NOW(), INTERVAL ifLastChange/100 SECOND) as ifLastChange FROM ports \
 WHERE device_id={ID} and ifDescr like '%Ethernet%' AND ifAdminStatus='up' AND ifOperStatus='down' AND ifLastChange >= 8640000*{XX}
 ```
-Вот собственно и все решение. 
+Вот собственно и вся суть решения. Однако вручную ходить в базу не очень удобно.  
+Поэтому автоматизируем как умеем.  
+
 Под нашу задачу написан отдельный скрипт (*inventory.py*), который в зависимости от параметров выдает список неиспользуемых интерфейсов в консоль или формирует *host_vars* для сценариев *ansible*.
 
 Дальше коротко:  
