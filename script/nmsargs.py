@@ -5,7 +5,7 @@
 creds = {
 "host": "127.0.0.1",
 "user": "librenms",
-"passwd": "nga4Lomo",
+"passwd": "password",
 "database": "librenms"}
 # and the nms that should be set to "observium" or "librenms"
 nms="librenms"

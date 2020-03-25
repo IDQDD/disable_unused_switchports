@@ -3,61 +3,13 @@
 days=30  #days to be passed to consider switch port be unused
 
 [cisco]
-#catalyst23
-#catalyst24
-#catalyst100
-#catalyst101
-#catalyst102
-#catalyst103
-#catalyst31
-#catalyst38
-#catalyst107
-#catalyst108
-#catalyst110
-#catalyst19
-#catalyst20
-#catalyst22
-#catalyst25
+catalyst100
+catalyst101
+catalyst102
+catalyst103
 
 [huawei]
-#OOB_Switch2
-#shab-1
-shab-3a
-#shab-3b
-#shab-4a
-#shab-4b
-#shab-8a
-
-# all the user`s access CISCO switches that supports ssh
-# catalyst22 and catalyst25 could be added after the firmware upgrade to K9
-[cisco-all]
-catalyst19
-catalyst20
-catalyst23
-catalyst24
-catalyst26
-catalyst27
-catalyst31
-catalyst38
-sw-nfu
-
-# all the user`s access HUAWEI switches that supports ssh
-[huawei-all]
 OOB_Switch1
 OOB_Switch2
-shab-3a
-shab-3b
-shab-4a
-shab-4b
-shab-8a
-sw-spb
-sw-samara1
-sw-samara2
-sw-krasn
-sw-novosibirsk
-
-[cisco-test]
-catalyst100
-
-[huawei-test]
-OOB_Switch1
+hw-sw-1
+hw-sw-2
